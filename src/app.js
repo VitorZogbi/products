@@ -39,4 +39,7 @@ process.on('SIGINT', () => {
 const indexRoutes = require('./routes/index-routes');
 app.use('/', indexRoutes);
 
+const productsRoutes = require('./routes/products-routes');
+app.use('/products', productsRoutes);
+
 module.exports = app;
