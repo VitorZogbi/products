@@ -12,6 +12,9 @@ mongoose.connect(MONGO_LOCAL, {
 
 const db = mongoose.connection;
 
+// Load models
+const products = require('./models/products');
+
 db.on('connected', () => {
     console.log('Mongoose default connection is open');
 });
