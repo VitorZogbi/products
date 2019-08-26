@@ -14,20 +14,17 @@ exports.listProducts = async (req, res) => {
 //create
 exports.createProducts = async (req, res) => {
     try {
-        const product = new Products ({
+        const products = new Products ({
             name: req.body.name,
             desc: req.body.desc,
             amount: req.body.amount,
-            price: req.body.aount
+            price: req.body.price
         });
-        console.log(product);    
-
-        await mention.save();
+        
+        await products.save();
 
         res.status(201).send({message: 'Produto cadastrado com sucesso'});
     }catch(e) {
-        res.status(500).send({message:"Falha ao cadastrar o produto"});
-    };
-
-    
+        res.status(500).send({message: "Falha ao cadastrar o produto"});
+    }; 
 }

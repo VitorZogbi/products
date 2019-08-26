@@ -11,11 +11,11 @@ const products = new mongoose.Schema({
         required: true
     },
     amount: {
-        type: Number,
+        type: String,
         required: true
     },
     price: {
-        type: Number,
+        type: String,
         required: true
     }
 });
