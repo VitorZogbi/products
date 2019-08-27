@@ -11,7 +11,9 @@ app.use(express.urlencoded({ extended: true }));
 const MONGO_LOCAL = 'mongodb://localhost/products';
 
 mongoose.connect(MONGO_LOCAL, {
-    useNewUrlParser: true
+    useNewUrlParser: true,
+    useFindAndModify: false,
+    useCreateIndex: true
 })
 
 const db = mongoose.connection;
