@@ -11,10 +11,10 @@ exports.createProducts = async data => {
     await product.save();
 };
 
-// exports.updateProducts = async (id, data) => {
-//     console.log(id, data);
-//     await Products.findByIdAndUpdate(id, { name: data.name, desc: data.desc, amount: data.amount, price: data.price });
-// };
+exports.updateProducts = async (id, data) => {
+    console.log(id, data);
+    await Products.findByIdAndUpdate(id, ({ name: data.name, desc: data.desc, amount: data.amount, price: data.price }));
+};
 
 exports.deleteProducts = async (id, callback) => {
         
