@@ -17,13 +17,6 @@ exports.listProducts = async (req, res) => {
 //create
 exports.createProducts = async (req, res) => {
     try {
-        // console.log('Produto: ', req.body)
-        // const product = new Products({
-        //     name: req.body.name,
-        //     desc: req.body.desc,
-        //     amount: req.body.amount,
-        //     price: req.body.price
-        // });
 
         await repository.updateProducts(req.params.id, req.body);
 

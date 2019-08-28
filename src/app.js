@@ -48,4 +48,7 @@ app.use('/', indexRoutes);
 const productsRoutes = require('./routes/products-routes');
 app.use('/products', productsRoutes);
 
+// const clientRoutes = require('./routes/client-routes');
+// app.use('/client', clientRoutes);
+
 module.exports = app;
