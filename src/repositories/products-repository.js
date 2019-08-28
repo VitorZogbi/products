@@ -12,7 +12,7 @@ exports.createProducts = async data => {
 };
 
 exports.updateProducts = async (id, data, callback) => {
-    console.log(id, data);
+    
     await Products.findByIdAndUpdate(id, {$set: data}, (error, docs) => {
         if (error) return callback(error, null);
         callback(null, docs);

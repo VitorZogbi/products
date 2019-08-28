@@ -17,8 +17,8 @@ exports.listProducts = async (req, res) => {
 //create
 exports.createProducts = async (req, res) => {
     try {
-
-        await repository.updateProducts(req.params.id, req.body);
+       
+        await repository.createProducts(req.body);
 
         res.status(200).send({ message: 'Produto cadastrado com sucesso' });
 
