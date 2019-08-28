@@ -17,34 +17,38 @@ exports.listProducts = async (req, res) => {
 //create
 exports.createProducts = async (req, res) => {
     try {
-        console.log('Produto: ', req.body)
-        const product = new Products({
-            name: req.body.name,
-            desc: req.body.desc,
-            amount: req.body.amount,
-            price: req.body.price
-        });
+        // console.log('Produto: ', req.body)
+        // const product = new Products({
+        //     name: req.body.name,
+        //     desc: req.body.desc,
+        //     amount: req.body.amount,
+        //     price: req.body.price
+        // });
 
-        await product.save();
+        await repository.updateProducts(req.params.id, req.body);
 
-        res.status(201).send({ message: 'Produto cadastrado com sucesso' });
+        res.status(200).send({ message: 'Produto cadastrado com sucesso' });
 
     } catch (e) {
         res.status(500).send({ message: "Falha ao cadastrar o produto", e });
     };
 }
 
-//update não esta ok
+//update
 exports.updateProducts = async (req, res) => {
 
-    //const {errors} = validationResult(req);
+    const {errors} = validationResult(req);
 
-    // if(error.length > 0) {
-    //     return res.status(400).send({messagem: errors})
-    // }
+    if(errors.length > 0) {
+        return res.status(400).send({messagem: errors})
+    }
+
     try{
-        await repository.updateProducts(req.params.id, req.body);
-        res.status(200).send({ message: 'Produto atualizado com sucesso' });
+        await repository.updateProducts(req.params.id, req.body, (error, result) => {
+            if (result) return res.status(200).send(result);
+            res.status(400).send({ erro: "Produto não encontrado" });
+        });
+       
     }catch(e) {
         res.status(500).send({message: 'Falha ao atualizar o produto'});
     }

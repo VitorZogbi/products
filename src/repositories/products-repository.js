@@ -11,9 +11,13 @@ exports.createProducts = async data => {
     await product.save();
 };
 
-exports.updateProducts = async (id, data) => {
+exports.updateProducts = async (id, data, callback) => {
     console.log(id, data);
-    await Products.findByIdAndUpdate(id, ({ name: data.name, desc: data.desc, amount: data.amount, price: data.price }));
+    await Products.findByIdAndUpdate(id, {$set: data}, (error, docs) => {
+        if (error) return callback(error, null);
+        
+        callback(null, docs);
+    });
 };
 
 exports.deleteProducts = async (id, callback) => {
