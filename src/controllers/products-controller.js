@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const { validationResult } = require('express-validator');
 const repository = require ('../repositories/products-repository');
-//const ProductValidation = require('../validation/product-validation');
 
 //list
 exports.listProducts = async (req, res) => {
@@ -19,15 +18,15 @@ exports.createProduct = async (req, res) => {
 
         const { errors } = validationResult(req);
 
-        if (errors.length > 0) return res.status(500).send({ message: errors });
+        if (errors.length > 0) return res.status(422).send({ messagem: errors });
+        
+        // if (req.body.name.length < 3) return res.status(422).send({ message: "Nome não pode ter menos que 3 caracteres"});
 
-        if (req.body.name.length < 3) return res.status(400).send({ message: "Nome não pode ter menos que 3 caracteres"});
-
-        if (req.body.description.length < 7) return res.status(400).send({ message: "Descrição não pode ter menos que 10 caracteres" })
+        // if (req.body.description.length < 7) return res.status(422).send({ message: "Descrição não pode ter menos que 10 caracteres" })
        
-        if (req.body.price <= 0) return res.status(400).send({message:'Preço não pode ser 0 ou negativo'});
+        // if (req.body.price <= 0) return res.status(422).send({message:'Preço não pode ser 0 ou negativo'});
     
-        if (req.body.stockLevel < 0) return res.status(400).send({message:'Quantidade não pode ser menor que 0'});    
+        // if (req.body.stockLevel < 0) return res.status(422).send({message:'Quantidade não pode ser menor que 0'});    
 
         await repository.createProducts(req.body);
 
@@ -43,15 +42,15 @@ exports.updateProduct = async (req, res) => {
 
     const { errors } = validationResult(req);
     
-    if (errors.length > 0) return res.status(500).send({messagem: errors});
+    if (errors.length > 0) return res.status(422).send({messagem: errors});
 
-    if (req.body.name.length < 3) return res.status(400).send({ message: "Nome não pode ter menos que 3 caracteres" });
+    // if (req.body.name.length < 3) return res.status(422).send({ message: "Nome não pode ter menos que 3 caracteres" });
 
-    if (req.body.description.length < 7) return res.status(400).send({ message: "Descrição não pode ter menos que 10 caracteres" })
+    // if (req.body.description.length < 7) return res.status(422).send({ message: "Descrição não pode ter menos que 10 caracteres" })
 
-    if (req.body.price <= 0) return res.status(400).send({ message: 'Preço não pode ser 0 ou negativo' });
+    // if (req.body.price <= 0) return res.status(422).send({ message: 'Preço não pode ser 0 ou negativo' });
 
-    if (req.body.stockLevel < 0) return res.status(400).send({ message: 'Quantidade não pode ser menor que 0' }); 
+    // if (req.body.stockLevel < 0) return res.status(422).send({ message: 'Quantidade não pode ser menor que 0' }); 
 
     try{
         await repository.updateProducts(req.params.id, req.body, (error, result) => {
