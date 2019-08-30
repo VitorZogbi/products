@@ -1,16 +1,16 @@
 const mongoose = require('mongoose');
 
-const products = new mongoose.Schema({
+const product = new mongoose.Schema({
 
     name: {
         type: String,
         required: true
     },
-    desc: {
+    description: {
         type: String,
         required: true
     },
-    amount: {
+    stockLevel: {
         type: Number,
         required: true
     },
@@ -20,5 +20,4 @@ const products = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('Products',products);
-
+module.exports = mongoose.model('Product',product);

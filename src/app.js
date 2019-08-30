@@ -18,7 +18,8 @@ mongoose.connect(MONGO_LOCAL, {
 const db = mongoose.connection;
 
 // Load models
-const products = require('./models/products');
+const Products = require('./models/products');
+//const Client = require('./models/client');
 
 db.on('connected', () => {
     console.log('Mongoose default connection is open');
@@ -32,22 +33,11 @@ db.on('disconnected', () => {
     console.log('Mongoose default connection is disconnected');
 });
 
-// process.on('SIGINT', () => {
-//     db.close(() => {
-//         console.log(
-//             'Mongoose default connection is disconnected due to application termination'
-//         );
-//         process.exit(0);
-//     });
-// });
-
 const indexRoutes = require('./routes/index-routes');
+
 app.use('/', indexRoutes);
 
 const productsRoutes = require('./routes/products-routes');
 app.use('/products', productsRoutes);
-
-// const clientRoutes = require('./routes/client-routes');
-// app.use('/client', clientRoutes);
 
 module.exports = app;

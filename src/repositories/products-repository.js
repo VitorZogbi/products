@@ -1,19 +1,21 @@
 const mongoose = require('mongoose');
-const Products = mongoose.model('Products');
+const Product = mongoose.model('Product');
 
 exports.listProducts = async () => {
-    const res = await Products.find({},'-__v');
+
+    const res = await Product.find({},'-__v');
     return res;
 };
 
 exports.createProducts = async data => {
-    const product = new Products(data);
+
+    const product = new Product(data);
     await product.save();
 };
 
 exports.updateProducts = async (id, data, callback) => {
     
-    await Products.findByIdAndUpdate(id, {$set: data}, (error, docs) => {
+    await Product.findByIdAndUpdate(id, {$set: data}, (error, docs) => {
         if (error) return callback(error, null);
         callback(null, docs);
     });
@@ -21,9 +23,17 @@ exports.updateProducts = async (id, data, callback) => {
 
 exports.deleteProducts = async (id, callback) => {
         
-    await Products.findByIdAndRemove(id, (error, docs) => {
+    await Product.findByIdAndRemove(id, (error, docs) => {
         if (error) return callback(error, null);
-        callback(null, docs);
-    });
-   
+        return callback(null, docs);
+        
+    }); 
 };
+
+exports.findProduct = async (id, callback) => {
+
+    await Product.findById(id, '-__v', (error, docs) => {
+        if (error) return callback (error, null);
+        return callback(null, docs);
+    })
+}

@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
-const Products = mongoose.model('Products');
 const { validationResult } = require('express-validator');
 const repository = require ('../repositories/products-repository');
-
+//const ProductValidation = require('../validation/product-validation');
 
 //list
 exports.listProducts = async (req, res) => {
@@ -10,51 +9,86 @@ exports.listProducts = async (req, res) => {
         const data = await repository.listProducts();
         res.status(200).send(data);
     }catch (e) {
-        res.status(500).send({message:'Falha ao carregar os produtos'});
+        res.status(500).send({message:'Falha ao carregar os produtos', e});
     }
 };
 
 //create
-exports.createProducts = async (req, res) => {
+exports.createProduct = async (req, res) => {
     try {
+
+        const { errors } = validationResult(req);
+
+        if (errors.length > 0) return res.status(500).send({ message: errors });
+
+        if (req.body.name.length < 3) return res.status(400).send({ message: "Nome não pode ter menos que 3 caracteres"});
+
+        if (req.body.description.length < 7) return res.status(400).send({ message: "Descrição não pode ter menos que 10 caracteres" })
        
+        if (req.body.price <= 0) return res.status(400).send({message:'Preço não pode ser 0 ou negativo'});
+    
+        if (req.body.stockLevel < 0) return res.status(400).send({message:'Quantidade não pode ser menor que 0'});    
+
         await repository.createProducts(req.body);
 
         res.status(200).send({ message: 'Produto cadastrado com sucesso' });
 
     } catch (e) {
-        res.status(500).send({ message: "Falha ao cadastrar o produto", e });
+        res.status(500).send({ message: "Não foi possível cadastrar o produto", error: e.message });
     };
 }
 
 //update
-exports.updateProducts = async (req, res) => {
+exports.updateProduct = async (req, res) => {
 
-    const {errors} = validationResult(req);
+    const { errors } = validationResult(req);
+    
+    if (errors.length > 0) return res.status(500).send({messagem: errors});
 
-    if(errors.length > 0) {
-        return res.status(400).send({messagem: errors})
-    }
+    if (req.body.name.length < 3) return res.status(400).send({ message: "Nome não pode ter menos que 3 caracteres" });
+
+    if (req.body.description.length < 7) return res.status(400).send({ message: "Descrição não pode ter menos que 10 caracteres" })
+
+    if (req.body.price <= 0) return res.status(400).send({ message: 'Preço não pode ser 0 ou negativo' });
+
+    if (req.body.stockLevel < 0) return res.status(400).send({ message: 'Quantidade não pode ser menor que 0' }); 
 
     try{
         await repository.updateProducts(req.params.id, req.body, (error, result) => {
             if (result) return res.status(200).send(result);
-            res.status(400).send({ erro: "Produto não encontrado" });
+            res.status(400).send({ erro: "Produto não encontrado" }, error);
         });
        
-    }catch(e) {
-        res.status(500).send({message: 'Falha ao atualizar o produto'});
+    }catch (e) {
+        res.status(500).send({message: 'Falha ao atualizar o produto'}, e);
     }
 }
 
-exports.deleteProducts = async (req, res) => {
-    try {
+//delete
+exports.deleteProduct = async (req, res) => {
+    
+    try {    
         await repository.deleteProducts(req.params.id, (error, result) => {
-            if(result) return res.status(200).send(result);
-            res.status(400).send({ erro: "Produto não encontrado" });
+            if (result) return res.status(200).send({ message: "Produto apagado com sucesso", result });
+            if (error) return res.status(500).send({ erro: error.message});
+            res.status(404).send({ error: "Produto não encontrado" });
         });
         
     }catch(e) {
-        res.status(500).send({message: 'Falha ao remover o produto'});
+        res.status(500).send({message: 'Falha ao remover o produto', e });
+    }
+}
+
+//find
+exports.findProduct = async (req, res) => {
+
+    try {
+        await repository.findProduct(req.params.id, (error, result) => {
+            if (result) return res.status(200).send( { message: "Produto encontrado", result });
+            if (error) return res.status(500).send({ erro: error.message });
+            res.status(404).send({ error: "Produto não encontrado", error});
+        });
+    } catch (e) {
+        res.status(500).send({ message: 'Falha ao encontrar o produto', e });
     }
 }
