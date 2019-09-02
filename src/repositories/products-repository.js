@@ -30,10 +30,26 @@ exports.deleteProducts = async (id, callback) => {
     }); 
 };
 
-exports.findProduct = async (id, callback) => {
+exports.findProductById = async (id, callback) => {
 
     await Product.findById(id, '-__v', (error, docs) => {
         if (error) return callback (error, null);
+        return callback(null, docs);
+    })
+}
+
+exports.findProductByName = async (name, callback) => {
+
+    await Product.find({name}, '-__v', (error, docs) => {
+        if (error) return callback(error, null);
+        return callback(null, docs);
+    })
+}
+
+exports.findProductByPrice = async (price, callback) => {
+    
+    await Product.find({price: {$lte: 10}}, '-__v', (error, docs) => {
+        if (error) return callback(error, null);
         return callback(null, docs);
     })
 }

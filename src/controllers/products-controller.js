@@ -18,7 +18,7 @@ exports.createProduct = async (req, res) => {
 
         const { errors } = validationResult(req);
 
-        if (errors.length > 0) return res.status(422).send({ messagem: errors });
+        if (errors.length > 0) return res.status(422).send({ message: errors });
         
         // if (req.body.name.length < 3) return res.status(422).send({ message: "Nome não pode ter menos que 3 caracteres"});
 
@@ -42,7 +42,7 @@ exports.updateProduct = async (req, res) => {
 
     const { errors } = validationResult(req);
     
-    if (errors.length > 0) return res.status(422).send({messagem: errors});
+    if (errors.length > 0) return res.status(422).send({message: errors});
 
     // if (req.body.name.length < 3) return res.status(422).send({ message: "Nome não pode ter menos que 3 caracteres" });
 
@@ -79,14 +79,42 @@ exports.deleteProduct = async (req, res) => {
 }
 
 //find
-exports.findProduct = async (req, res) => {
+exports.findProductById = async (req, res) => {
 
     try {
-        await repository.findProduct(req.params.id, (error, result) => {
+        await repository.findProductById(req.params.id, (error, result) => {
             if (result) return res.status(200).send( { message: "Produto encontrado", result });
             if (error) return res.status(500).send({ erro: error.message });
             res.status(404).send({ error: "Produto não encontrado", error});
         });
+    } catch (e) {
+        res.status(500).send({ message: 'Falha ao encontrar o produto', e });
+    }
+}
+
+//findByName
+exports.findProductByName = async (req, res) => {
+
+    try {
+        await repository.findProductByName(req.params.name, (error, result) => {
+            if (result.length === 0 ) return res.status(404).send({ message: "Nenhum produto encontrado", result});
+            if (error) return res.status(500).send ({ erro: error.message });
+            return res.status(200).send({ error: "Produto(s) encontrado(s)", result });
+    });
+    } catch (e) {
+        res.status(500).send( { message: 'Falha ao encontrar o produto', e });
+    }
+}
+
+//findByPrice
+exports.findProductByPrice = async (req, res) => {
+    
+    try {
+    await repository.findProductByPrice(req.params.price, (error, result) => {
+        if (result.length === 0 ) return res.status(404).send({ message: "Nenhum Produto encontrado"});  
+        if (error) return res.status(500).send({ erro: error.message });
+        return res.status(200).send({ message: "Produto(s) encontrado(s)", result });
+    });
     } catch (e) {
         res.status(500).send({ message: 'Falha ao encontrar o produto', e });
     }
