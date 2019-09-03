@@ -48,7 +48,7 @@ exports.findProductByName = async (name, callback) => {
 
 exports.findProductByPrice = async (price, callback) => {
     
-    await Product.find({price: {$lte: 10}}, '-__v', (error, docs) => {
+    await Product.find({price: {$lte: price}}, '-__v', (error, docs) => {
         if (error) return callback(error, null);
         return callback(null, docs);
     })
