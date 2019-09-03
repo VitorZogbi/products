@@ -3,7 +3,7 @@ const Product = mongoose.model('Product');
 
 exports.listProducts = async () => {
 
-    const res = await Product.find({},'-__v');
+    const res = await Product.find({},'-__v').sort();
     return res;
 };
 
@@ -40,7 +40,7 @@ exports.findProductById = async (id, callback) => {
 
 exports.findProductByName = async (name, callback) => {
 
-    await Product.find({name}, '-__v', (error, docs) => {
+    await Product.find({ name: { '$regex': name, '$options': 'i' } }, '-__v', (error, docs) => {
         if (error) return callback(error, null);
         return callback(null, docs);
     })
