@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const { validationResult } = require('express-validator');
 const repository = require ('../repositories/products-repository');
+const ValidateId = require('../validation/id-validation');
+
 
 //list
 exports.listProducts = async (req, res) => {
@@ -14,20 +16,13 @@ exports.listProducts = async (req, res) => {
 
 //create
 exports.createProduct = async (req, res) => {
-    try {
-
-        const { errors } = validationResult(req);
-
-        if (errors.length > 0) return res.status(422).send({ message: errors });
-        
-        // if (req.body.name.length < 3) return res.status(422).send({ message: "Nome não pode ter menos que 3 caracteres"});
-
-        // if (req.body.description.length < 7) return res.status(422).send({ message: "Descrição não pode ter menos que 10 caracteres" })
-       
-        // if (req.body.price <= 0) return res.status(422).send({message:'Preço não pode ser 0 ou negativo'});
     
-        // if (req.body.stockLevel < 0) return res.status(422).send({message:'Quantidade não pode ser menor que 0'});    
+    const { errors } = validationResult(req);
 
+    if (errors.length > 0) return res.status(422).send({ message: errors });
+    
+    try {
+        
         await repository.createProducts(req.body);
 
         res.status(200).send({ message: 'Produto cadastrado com sucesso' });
@@ -43,15 +38,7 @@ exports.updateProduct = async (req, res) => {
     const { errors } = validationResult(req);
     
     if (errors.length > 0) return res.status(422).send({message: errors});
-
-    // if (req.body.name.length < 3) return res.status(422).send({ message: "Nome não pode ter menos que 3 caracteres" });
-
-    // if (req.body.description.length < 7) return res.status(422).send({ message: "Descrição não pode ter menos que 10 caracteres" })
-
-    // if (req.body.price <= 0) return res.status(422).send({ message: 'Preço não pode ser 0 ou negativo' });
-
-    // if (req.body.stockLevel < 0) return res.status(422).send({ message: 'Quantidade não pode ser menor que 0' }); 
-
+    
     try{
         await repository.updateProducts(req.params.id, req.body, (error, result) => {
             if (result) return res.status(200).send(result);
@@ -65,7 +52,11 @@ exports.updateProduct = async (req, res) => {
 
 //delete
 exports.deleteProduct = async (req, res) => {
-    
+
+    const { errors } = validationResult(req);
+
+    if (errors.length > 0) return res.status(422).send({ message: errors });
+            
     try {    
         await repository.deleteProducts(req.params.id, (error, result) => {
             if (result) return res.status(200).send({ message: "Produto apagado com sucesso", result });
@@ -80,7 +71,11 @@ exports.deleteProduct = async (req, res) => {
 
 //find
 exports.findProductById = async (req, res) => {
+    
+    const { errors } = validationResult(req);
 
+    if (errors.length > 0) return res.status(422).send({ message: errors });
+    
     try {
         await repository.findProductById(req.params.id, (error, result) => {
             if (result) return res.status(200).send( { message: "Produto encontrado", result });

@@ -19,12 +19,9 @@ class ProductValidator {
     }
 
     static isNumber(n) {
-        console.log(n)
         return isNaN(+(n));
     }
+
 }
-
-
-    
 
 module.exports = ProductValidator;

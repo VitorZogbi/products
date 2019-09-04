@@ -38,9 +38,9 @@ exports.findProductById = async (id, callback) => {
     })
 }
 
-exports.findProductByName = async (name, callback) => {
+exports.findProductByName = async (productName, callback) => {
 
-    await Product.find({ name: { '$regex': name, '$options': 'i' } }, '-__v', (error, docs) => {
+    await Product.find({ name: { '$regex': productName, '$options': 'i' } }, '-__v', (error, docs) => {
         if (error) return callback(error, null);
         return callback(null, docs);
     })
