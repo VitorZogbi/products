@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Product = mongoose.model('Product');
 
 exports.listProducts = async () => {
-
+    
     const res = await Product.find({},'-__v').sort();
     return res;
 };
@@ -49,6 +49,21 @@ exports.findProductByName = async (productName, callback) => {
 exports.findProductByPrice = async (price, callback) => {
     
     await Product.find({price: {$lte: price}}, '-__v', (error, docs) => {
+        if (error) return callback(error, null);
+        return callback(null, docs);
+    })
+}
+
+exports.listProductsPaginated = async (page, callback) => {
+
+    const options = {
+        
+        limit: 10,
+        page: page
+        
+    }
+
+    await Product.paginate({}, options, (error, docs) => {
         if (error) return callback(error, null);
         return callback(null, docs);
     })

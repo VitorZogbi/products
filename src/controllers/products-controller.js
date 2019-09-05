@@ -114,3 +114,18 @@ exports.findProductByPrice = async (req, res) => {
         res.status(500).send({ message: 'Falha ao encontrar o produto', e });
     }
 }
+
+exports.listProductsPaginated = async (req, res) => {
+    
+    try {
+        await repository.listProductsPaginated(req.params.page, (error,result) => {
+            if (result.docs.length === 0) return res.status(206).send({ message: "Nenhum Produto encontrado", result });
+            if (error) return res.status(500).send({ erro: error.message });
+            return res.status(200).send({
+                message: "Produto(s) encontrado(s)", result });
+        });
+        res.status(200).send(data);
+    } catch (e) {
+        res.status(500).send({ message: 'Falha ao carregar os produtos', e });
+    }
+}

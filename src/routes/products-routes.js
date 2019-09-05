@@ -10,6 +10,8 @@ router.get('/findbyid/:id', IdValidation.validateId(), productsController.findPr
 
 router.get('/findbyname/:name', productsController.findProductByName);
 
+router.get('/listpaginated/:page', productsController.listProductsPaginated);
+
 //price lower or equal
 router.get('/findbyprice/:price', productsController.findProductByPrice);
 
