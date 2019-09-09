@@ -1,16 +1,16 @@
 const mongoose = require('mongoose');
 const Product = mongoose.model('Product');
 
-exports.listProducts = async () => {
-    
-    const res = await Product.find({},'-__v').sort();
-    return res;
-};
-
 exports.createProducts = async data => {
 
     const product = new Product(data);
     await product.save();
+};
+
+exports.listProducts = async () => {
+    
+    const res = await Product.find({},'-__v').sort();
+    return res;
 };
 
 exports.updateProducts = async (id, data, callback) => {

@@ -1,18 +1,5 @@
-const mongoose = require('mongoose');
 const { validationResult } = require('express-validator');
 const repository = require ('../repositories/products-repository');
-const ValidateId = require('../validation/id-validation');
-
-
-//list
-exports.listProducts = async (req, res) => {
-    try{
-        const data = await repository.listProducts();
-        res.status(200).send(data);
-    }catch (e) {
-        res.status(500).send({message:'Falha ao carregar os produtos', e});
-    }
-};
 
 //create
 exports.createProduct = async (req, res) => {
@@ -32,6 +19,16 @@ exports.createProduct = async (req, res) => {
     };
 }
 
+//list
+exports.listProducts = async (req, res) => {
+    try {
+        const data = await repository.listProducts();
+        res.status(200).send(data);
+    } catch (e) {
+        res.status(500).send({ message: 'Falha ao carregar os produtos', e });
+    }
+};
+
 //update
 exports.updateProduct = async (req, res) => {
 
@@ -42,7 +39,7 @@ exports.updateProduct = async (req, res) => {
     try{
         await repository.updateProducts(req.params.id, req.body, (error, result) => {
             if (result) return res.status(200).send(result);
-            res.status(400).send({ erro: "Produto não encontrado" }, error);
+            res.status(404).send({ erro: "Produto não encontrado" }, error);
         });
        
     }catch (e) {
@@ -79,8 +76,8 @@ exports.findProductById = async (req, res) => {
     try {
         await repository.findProductById(req.params.id, (error, result) => {
             if (result) return res.status(200).send( { message: "Produto encontrado", result });
-            if (error) return res.status(500).send({ erro: error.message });
-            res.status(404).send({ error: "Produto não encontrado", error});
+            if (error) return res.status(500).send({ message: "Produto não encontrado", erro: error.message });
+            return res.status(404).send({ message: "Produto não encontrado", error});
         });
     } catch (e) {
         res.status(500).send({ message: 'Falha ao encontrar o produto', e });

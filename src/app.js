@@ -18,8 +18,8 @@ mongoose.connect(MONGO_LOCAL, {
 const db = mongoose.connection;
 
 // Load models
-const Products = require('./models/products');
-//const Client = require('./models/client');
+require('./models/products-models');
+require('./models/sku-products-models');
 
 db.on('connected', () => {
     console.log('Mongoose default connection is open');
@@ -39,5 +39,8 @@ app.use('/', indexRoutes);
 
 const productsRoutes = require('./routes/products-routes');
 app.use('/products', productsRoutes);
+
+const skuProductsRoutes = require('./routes/sku-products-routes');
+app.use('/skuproducts', skuProductsRoutes);
 
 module.exports = app;
