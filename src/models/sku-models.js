@@ -2,7 +2,13 @@ const mongoose = require('mongoose');
 const mongoosePaginate = require('mongoose-paginate-v2');
 const mongooseAggregatePaginate = require('mongoose-aggregate-paginate-v2')
 
-const skuTshirts = new mongoose.Schema({
+const sku = new mongoose.Schema({
+     
+    productId: {
+                type: mongoose.Schema.Types.ObjectId,
+                required: true,
+                ref: 'SKUTProduct'
+    },
 
     color: {
             type: String,
@@ -31,8 +37,8 @@ const skuTshirts = new mongoose.Schema({
     }
 });
 
-skuProduct.plugin(mongoosePaginate);
+sku.plugin(mongoosePaginate);
 
-skuProduct.plugin(mongooseAggregatePaginate);
+sku.plugin(mongooseAggregatePaginate);
 
-module.exports = mongoose.model('SKUTshirts', skuTshirts);
+module.exports = mongoose.model('SKU', sku);

@@ -31,18 +31,18 @@ exports.listProducts = async (req, res) => {
 
 exports.createSku = async (req, res) => {
 
-    try {
+    // try {
 
         await repository.createSku(req.params.id, req.body, (error, result) => {
             if (result) return res.status(200).send(result);
-            res.status(404).send({ erro: "Produto não encontrado" }, error);
+            res.status(404).send({ erro: "Sku não cadastrada"});
         });
 
-        res.status(200).send({message: "Produto cadastrado com sucesso"});
+        //res.status(200).send({message: "sku cadastrado com sucesso"});
 
-    } catch (error) {
-        res.status(500).send({ message: "Não foi possível cadastrar a SKU", error: error.message});
-    }
+    // } catch (error) {
+    //     res.status(500).send({ message: "Não foi possível cadastrar a SKU" });
+    // }
     
 }
 
@@ -63,15 +63,20 @@ exports.findProductById = async (req, res) => {
         }
 }
 
-exports.findSkuById = async (req, res) => {
+exports.updateProduct = async (req, res) => {
 
-    try  {
-        await repository.findSkuById(req.params.id, (error, result) => {
-            if(result) return res.status(200).send({message: "Produto encontrado", result});
-            if(error) return res.status(500).send({ message: "Produto não encontrado", erro: error.message });
-            return res.status(404).send({ message: "Produto não encontrado", error });
+    const { errors } = validationResult(req);
+
+    if (errors.length > 0) return res.status(422).send({ message: errors });
+
+    try {
+        await repository.updateProduct(req.params.id, req.body, (error, result) => {
+      
+            if (result) return res.status(200).send({ message: "Produto atualizado", result });
+                if (error) return res.status(500).send({ message: "Produto não pode ser atualizado", erro: error.message });
+                return res.status(404).send({ message: "Produto não pode ser atualizado", error });
             });
         } catch (e) {
             res.status(500).send({ message: 'Falha ao encontrar o produto', e });
-        }
+    }
 }

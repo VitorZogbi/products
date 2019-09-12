@@ -14,12 +14,24 @@ exports.listProducts = async () => {
 }
 
 exports.createSku = async (id, data, callback) => {
+    //erro aqui
+    console.log('oioioi');
+    console.log(id);
     console.log(data);
-    await SKUProduct.findByIdAndUpdate(id, { $addToSet: data }, (error,docs) => {
+    await SKUProduct.findByIdAndUpdate({ _id: id }, { $addToSet: { sku: data}}, (error, docs) => {
+
         if (error) return callback(error, null);
         callback(null, docs);
-    }) 
+    })
 }
+
+// exports.createSku = async (id, data, callback) => {
+    
+//     await SKUProduct.findByIdAndUpdate( id, {$addToSet: data} , (error, docs) => {
+//         if (error) return callback(error, null);
+//         callback(null, docs);
+//     })
+// }
 
 exports.findProductById = async (id, callback) => {
 
@@ -35,4 +47,13 @@ exports.findSkuById = async (sku, callback) => {
         if (error) return callback(error, null);
         return callback(null, docs);
     })
+}
+
+exports.updateProduct = async (id, data, callback) => {
+
+    await SKUProduct.findByIdAndUpdate(id, {$set: data}, (error, docs) => {
+        if (error) return callback(error, null);
+        callback(null, docs);
+    })
+    
 }

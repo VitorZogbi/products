@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
 const mongoosePaginate = require('mongoose-paginate-v2');
 const mongooseAggregatePaginate = require('mongoose-aggregate-paginate-v2')
-// require('mongoose-money');
-// var Money = require ('moneyjs');
+require ('./sku-models');
 
 
 const skuProduct = new mongoose.Schema({
@@ -18,13 +17,14 @@ const skuProduct = new mongoose.Schema({
 
     active: {
         type: Boolean,
-        required: true
+        default: false
     },
 
     sku: [{
         
-        id: {
-            type: mongoose.Schema.Types.ObjectId
+        skuId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'SKUTshirts'
         }
         
     }]
