@@ -12,6 +12,6 @@ router.get('/findbyid/:id', IdValidation.validateId(), SKUProductsController.fin
 
 router.put('/update/:id', IdValidation.validateId(), SKUProductsController.updateProduct);
 
-router.put('/createsku/:id', SKUProductsController.createSku);
+router.delete('/delete/:id', IdValidation.validateId(), SKUProductsController.deleteProduct);
 
 module.exports = router;

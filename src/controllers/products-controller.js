@@ -56,7 +56,7 @@ exports.deleteProduct = async (req, res) => {
             
     try {    
         await repository.deleteProducts(req.params.id, (error, result) => {
-            if (result) return res.status(200).send({ message: "Produto apagado com sucesso", result });
+            if (result) return res.status(204).send({ message: "Produto apagado com sucesso", result });
             if (error) return res.status(500).send({ erro: error.message});
             res.status(404).send({ error: "Produto não encontrado" });
         });
