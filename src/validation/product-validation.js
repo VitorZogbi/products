@@ -2,6 +2,10 @@ const { check } = require('express-validator');
 
 class ProductValidator {
 
+    static isNumber(n) {
+        return isNaN(+(n));
+    }
+    
     static productValidation() {
 
         return[
@@ -16,10 +20,6 @@ class ProductValidator {
 
         check('price').isFloat({gt : 0.0}).withMessage('Preço tem que ser maior que 0').isDecimal({decimal_digits:'1,2'}).withMessage("Somente são aceitos números com dois digitos após a vírgula")
         ]
-    }
-
-    static isNumber(n) {
-        return isNaN(+(n));
     }
 
 }

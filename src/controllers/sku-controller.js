@@ -3,7 +3,7 @@ const repository = require ('../repositories/sku-repository');
 
 exports.createSku = async (req, res) => {
     
-    const errors = validationResult(req);
+    const { errors } = validationResult(req);
 
     if (errors.length > 0) return res.status(422).send({ message: errors });
 
@@ -11,7 +11,7 @@ exports.createSku = async (req, res) => {
 
         await repository.createSku(req.body, (error, result) => {
             if (result) return res.status(200).send(result);
-            res.status(404).send({ erro: "SKU não criada" }, error);
+            res.status(404).send({ erro: "SKU não criada", error });
         })
         
     }catch (e) {
@@ -95,4 +95,16 @@ exports.deleteSku = async (req, res) => {
     }catch (e) {
         res.status(500).send({ message: 'Falha ao encontrar a sku', e });
     }
+}
+
+exports.listPaginated = async (req, res) => {
+
+    await repository.listPaginated(req.params.page, (error, result) => {
+        if (result.docs.length === 0) return res.status(206).send({ message: "Nenhum Produto encontrado", result });
+        if (error) return res.status(500).send({ erro: error.message });
+        return res.status(200).send({
+            message: "Produto(s) encontrado(s)", result}).catch(err => {
+                throw new Error(err);
+            });
+    });
 }

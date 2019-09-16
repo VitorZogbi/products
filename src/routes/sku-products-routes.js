@@ -8,9 +8,11 @@ router.post('/create', ProductValidation.productValidation(), SKUProductsControl
 
 router.get('/list', SKUProductsController.listProducts);
 
+router.get('/listpaginated/:page', SKUProductsController.listPaginated);
+
 router.get('/findbyid/:id', IdValidation.validateId(), SKUProductsController.findProductById);
 
-router.put('/update/:id', IdValidation.validateId(), SKUProductsController.updateProduct);
+router.put('/update/:id', IdValidation.validateId(), ProductValidation.productValidation(), SKUProductsController.updateProduct);
 
 router.delete('/delete/:id', IdValidation.validateId(), SKUProductsController.deleteProduct);
 

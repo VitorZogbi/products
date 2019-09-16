@@ -37,3 +37,18 @@ exports.deleteProduct = async (id, callback) => {
         callback(null, docs);
     })
 }
+
+exports.listPaginated = async (page, callback) => {
+
+    const options = {
+
+        limit: 10,
+        page: page
+
+    }
+
+    await SKUProduct.paginate({}, options, (error, docs) => {
+        if (error) return callback(error, null);
+        return callback(null, docs);
+    })
+}

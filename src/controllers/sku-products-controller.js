@@ -4,9 +4,9 @@ const repository = require ('../repositories/sku-products-repository');
 //create
 exports.createProduct = async (req, res) => {
 
-    const errors = validationResult(req);
+    const { errors } = validationResult(req);
 
-    if (errors.length > 0) return res.status(422).send({message: errors});
+    if (errors.length > 0) return res.status(422).send({ message: errors });
 
     try {
 
@@ -28,6 +28,20 @@ exports.listProducts = async (req, res) => {
         res.status(500).send({ message: "Não foi possível consultar os produtos", error: error.message });
     }
 };
+
+exports.listPaginated = async (req, res) => {
+
+    await repository.listPaginated (req.params.page, (error, result) => {
+        if (result.docs.length === 0) return res.status(206).send({ message: "Nenhum Produto encontrado", result });
+        if (error) return res.status(500).send({ erro: error.message });
+        return res.status(200).send({
+            message: "Produto(s) encontrado(s)", result
+        }).catch(err => {
+            throw new Error(err);
+        });
+    });
+    
+}
 
 exports.findProductById = async (req, res) => {
 

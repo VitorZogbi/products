@@ -51,3 +51,18 @@ exports.deleteSku = async (id, callback) => {
         return callback(null, docs);
     })
 };
+
+exports.listPaginated = async (page, callback) => {
+
+    const options = {
+
+        limit: 10,
+        page: page
+
+    }
+
+    await SKU.paginate({}, options, (error, docs) => {
+        if (error) return callback(error, null);
+        return callback(null, docs);
+    })
+}
