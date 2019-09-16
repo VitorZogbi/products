@@ -62,3 +62,37 @@ exports.findProductById = async (req, res) => {
         res.status(500).send({ message: 'Falha ao encontrar o produto', e });
     }
 }
+
+exports.updateSku = async (req, res) => {
+
+    const { errors } = validationResult(req);
+
+    if (errors.length > 0) return res.status(422).send({ message: errors });
+
+    try {
+        await repository.updateSku(req.params.id, req.body, (error, result) => {
+            if (result) return res.status(200).send({ message: "Sku editada com sucesso", result });
+            if (error) return res.status(500).send({ message: "Não foi possível editar a Sku", erro: error.message });
+            return res.status(404).send({ message: "Sku não encontrada", error });
+        })
+    } catch (e) {
+        res.status(500).send({ message: 'Falha ao encontrar a sku', e });
+    }
+}
+
+exports.deleteSku = async (req, res) => {
+
+    const { errors } = validationResult(req);
+
+    if (errors.length > 0) return res.status(422).send({ message: errors });
+
+    try {
+        await repository.deleteSku(req.params.id, (error, result) => {
+            if (result) return res.status(200).send({ message: "Sku apagada", result });
+            if (error) return res.status(500).send({ message: "Não foi possível apagar a Sku", erro: error.message });
+            return res.status(404).send({ message: "Sku não encontrada", error });
+        })
+    }catch (e) {
+        res.status(500).send({ message: 'Falha ao encontrar a sku', e });
+    }
+}

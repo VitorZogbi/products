@@ -33,3 +33,21 @@ exports.findProductById = async (id, callback) => {
         return callback(null, docs);
     })
 };
+
+exports.updateSku = async (id, data, callback) => {
+
+    await SKU.findByIdAndUpdate(id, { $set: data }, (error, docs) => {
+
+        if (error) return callback (error, null);
+        callback(null, docs);
+    })
+}
+
+exports.deleteSku = async (id, callback) => {
+
+    await SKU.findByIdAndDelete( id, (error, docs) => {
+        
+        if (error) return callback(error, null);
+        return callback(null, docs);
+    })
+};

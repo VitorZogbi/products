@@ -12,4 +12,8 @@ router.get('/findbyid/:id', idValidation.validateId(), sku.findSkuById);
 
 router.get('/findbyproductid/:id', idValidation.validateId(), sku.findProductById);
 
+router.put('/update/:id', idValidation.validateId(), sku.updateSku);
+
+router.delete('/delete/:id', idValidation.validateId(), sku.deleteSku);
+
 module.exports = router;
