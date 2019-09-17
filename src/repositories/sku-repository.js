@@ -15,14 +15,16 @@ exports.listSku = async () => {
     const res = await SKU.find({}, '-__v').sort( {_id: -1});
     return res;
 };
-
+//returns product information also instead product id
 exports.findSkuById = async (id, callback) => {
 
+    
     await SKU.findById( id ,'-__v', (error, docs) => {
         
         if (error) return callback(error, null);
         return callback(null, docs);
-    })
+    }).populate('productId');
+   
 };
 
 exports.findProductById = async (id, callback) => {

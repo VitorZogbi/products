@@ -19,15 +19,7 @@ const skuProduct = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-
-    sku: [{
-        
-        skuId: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'SKUTshirts'
-        }
-        
-    }]
+   
 });
 
 skuProduct.plugin(mongoosePaginate);

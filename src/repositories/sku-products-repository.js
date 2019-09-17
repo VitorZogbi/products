@@ -11,6 +11,7 @@ exports.listProducts = async () => {
     
     const res = await SKUProduct.find({}, '-__v').sort({_id: -1});
     return res;
+
 }
 
 exports.findProductById = async (id, callback) => {
@@ -18,7 +19,8 @@ exports.findProductById = async (id, callback) => {
     await SKUProduct.findById(id, '-__v',(error, docs) => {
         if(error) return callback(error, null);
         return callback(null, docs);
-    })
+    });
+    
 }
 
 exports.updateProduct = async (id, data, callback) => {
