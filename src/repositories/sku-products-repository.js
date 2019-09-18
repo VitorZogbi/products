@@ -8,11 +8,17 @@ exports.createProduct = async data => {
 }
 
 exports.listProducts = async () => {
-    
-    const res = await SKUProduct.find({}, '-__v').sort({_id: -1});
-    return res;
+    return SKUProduct.aggregate([
+        {
+            $lookup: {
+                from: "products",
+                localField: "productId",
+                foreignField: "_id",
+                as: "produto"
+            }
+        }])
 
-}
+};
 
 exports.findProductById = async (id, callback) => {
 
