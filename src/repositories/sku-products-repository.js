@@ -11,14 +11,15 @@ exports.listProducts = async () => {
     return SKUProduct.aggregate([
         {
             $lookup: {
-                from: "products",
-                localField: "productId",
-                foreignField: "_id",
+                from: "skus",
+                localField: "_id",
+                foreignField: "productId",
                 as: "produto"
             }
         }])
 
 };
+
 
 exports.findProductById = async (id, callback) => {
 
