@@ -8,16 +8,20 @@ exports.createProduct = async data => {
 }
 
 exports.listProducts = async () => {
-    return SKUProduct.aggregate([
+    
+    const res = 
+     await SKUProduct.aggregate([
         {
             $lookup: {
                 from: "skus",
                 localField: "_id",
                 foreignField: "productId",
-                as: "produto"
+                as: "skus"
             }
         }])
-
+    // filter = res.indexOf("5d83b37db379c61a685e");
+    // console.log(filter);
+    return res;
 };
 
 

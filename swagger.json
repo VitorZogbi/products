@@ -1,0 +1,303 @@
+{
+  "swagger": "2.0",
+  "schemes": [
+    "http"
+  ],
+  "host": "localhost:3000",
+  "info": {
+    "version": "1.0",
+    "title": "products-API_with_node_js",
+    "description": "Administa o catalógo e estoque de produtos de um e-commerce",
+    "contact": {
+      "name": "Suporte",
+      "email": "vitor.zogbi_bols@compasso.com.br"
+    }
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "tags": [
+    {
+      "name": "skuproduct"
+    },
+    {
+      "name": "sku"
+    }
+  ],
+  "paths": {
+    "/skuproducts/create": {
+      "post": {
+        "tags": [
+          "skuproduct"
+        ],
+        "summary": "Cadastra produto",
+        "description": "Cadastra um novo produto que possua skus",
+        "operationId": "createProduct",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "skuproducts",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/skuproducts"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Produto cadastrado com sucesso",
+            "schema": {
+              "$ref": "#/definitions/skuproducts"
+            }
+          },
+          "422": {
+            "description": "Erro com os dados do produto"
+          },
+          "500": {
+            "description": "Não foi possível cadastrar o produto"
+          }
+        }
+      }
+    },
+    "/skuproducts/list": {
+      "get": {
+        "tags": [
+          "skuproduct"
+        ],
+        "summary": "Listagem de produtos",
+        "description": "Retorna uma listagem com todos os produtos e suas skus cadastrados na base de dados",
+        "operationId": "listProducts",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/skuproducts"
+            }
+          },
+          "500": {
+            "description": "Não foi possível consultar os produtos"
+          }
+        }
+      }
+    },
+    "/skuproducts/listpaginated/{page}": {
+      "get": {
+        "tags": [
+          "skuproducts"
+        ],
+        "summary": "Listagem de produtos paginada",
+        "description": "Retorna listagem dos produtos com paginação",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "page",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "skuproduct",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/skuproducts"
+            }
+          },
+          "206": {
+            "description": "Zero produto nessa página"
+          },
+          "500": {
+            "description": "Falha ao listar os produtos"
+          }
+        }
+      }
+    },
+    "/skuproducts/findbyid/{id}": {
+      "get": {
+        "tags": [
+          "skuproduct"
+        ],
+        "summary": "Encontra produto pela id",
+        "description": "Retorna os dados de um produto com base na id informada",
+        "operationId": "findProductById",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "skuproduct",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Produto encontrado",
+            "schema": {
+              "$ref": "#/definitions/skuproducts"
+            }
+          },
+          "404": {
+            "description": "Produto não encontrado"
+          },
+          "422": {
+            "description": "Erro com os dados do produto"
+          },
+          "500": {
+            "description": "Falha ao encontrar o produto"
+          }
+        }
+      }
+    },
+    "/skuproducts/update/{id}": {
+      "put": {
+        "tags": [
+          "skuproduct"
+        ],
+        "summary": "Altera produto",
+        "description": "Altera algum(ns) valor(s) do produto",
+        "operationId": "updateProduct",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "skuproduct",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Produto atualizado",
+            "schema": {
+              "$ref": "#/definitions/skuproducts"
+            }
+          },
+          "422": {
+            "description": "Erro com os dados do produto"
+          },
+          "500": {
+            "description": "Não foi possível alterar o produto"
+          }
+        }
+      }
+    },
+    "/skuproducts/delete/{id}": {
+      "delete": {
+        "tags": [
+          "skuproduct"
+        ],
+        "summary": "Exclui o produto",
+        "description": "Exclusão de um produto através do Id",
+        "operationId": "deleteProduct",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "skuproduct",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Produto apagado com sucesso"
+          },
+          "404": {
+            "description": "Produto não encontrado"
+          },
+          "422": {
+            "description": "Erro com os dados do produto"
+          },
+          "505": {
+            "description": "Não foi possível apagar o produto desejado"
+          }
+        }
+      }
+    },
+    "/sku/create": null,
+    "/sku/list": null,
+    "/sku/listpaginated/{page}": null,
+    "/sku/findbyid/{id}": null,
+    "/sku/findbyproductid/{id}": null,
+    "/sku/update/{id}": null,
+    "/sku/delete/{id}": null
+  },
+  "definitions": {
+    "skuproducts": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "object",
+          "example": "5d826e5d57eab10780aecd1d"
+        },
+        "active": {
+          "type": "boolean"
+        },
+        "name": {
+          "type": "string",
+          "format": "utf-8",
+          "example": "Camisa"
+        },
+        "description": {
+          "type": "string",
+          "format": "utf-8",
+          "example": "Item para vestir o torso"
+        }
+      }
+    },
+    "skus": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "object",
+          "example": "5d826e5d57eab10780aecd1e"
+        },
+        "productId": {
+          "$ref": "#/definitions/skuproducts"
+        },
+        "color": {
+          "type": "string",
+          "format": "utf-8",
+          "example": "verde"
+        },
+        "size": {
+          "type": "string",
+          "format": "utf-8",
+          "example": "GG"
+        },
+        "price": {
+          "type": "number",
+          "format": "double",
+          "example": 49.9
+        },
+        "stockLevel": {
+          "type": "number",
+          "format": "integer",
+          "example": 10
+        },
+        "active": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

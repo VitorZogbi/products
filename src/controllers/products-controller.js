@@ -12,7 +12,7 @@ exports.createProduct = async (req, res) => {
         
         await repository.createProducts(req.body);
 
-        res.status(200).send({ message: 'Produto cadastrado com sucesso' });
+        res.status(201).send({ message: 'Produto cadastrado com sucesso' });
 
     } catch (e) {
         res.status(500).send({ message: "Não foi possível cadastrar o produto", error: e.message });
@@ -38,7 +38,7 @@ exports.updateProduct = async (req, res) => {
     
     try{
         await repository.updateProducts(req.params.id, req.body, (error, result) => {
-            if (result) return res.status(200).send(result);
+            if (result) return res.status(201).send(result);
             res.status(404).send({ erro: "Produto não encontrado", error });
         });
        

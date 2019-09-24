@@ -10,7 +10,7 @@ exports.createSku = async (req, res) => {
     try {
 
         await repository.createSku(req.body, (error, result) => {
-            if (result) return res.status(200).send(result);
+            if (result) return res.status(201).send(result);
             res.status(404).send({ erro: "SKU não criada", error });
         })
         
@@ -71,7 +71,7 @@ exports.updateSku = async (req, res) => {
 
     try {
         await repository.updateSku(req.params.id, req.body, (error, result) => {
-            if (result) return res.status(200).send({ message: "Sku editada com sucesso", result });
+            if (result) return res.status(201).send({ message: "Sku editada com sucesso", result });
             if (error) return res.status(500).send({ message: "Não foi possível editar a Sku", erro: error.message });
             return res.status(404).send({ message: "Sku não encontrada", error });
         })
