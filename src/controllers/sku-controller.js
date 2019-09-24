@@ -5,7 +5,7 @@ exports.createSku = async (req, res) => {
     
     const { errors } = validationResult(req);
 
-    if (errors.length > 0) return res.status(422).send({ message: errors });
+    if (errors.length > 0) return res.status(422).send({ message: "Erro com os dados da sku", error: errors });
 
     try {
 
@@ -33,16 +33,16 @@ exports.findSkuById = async (req, res) => {
 
     const { errors } = validationResult(req);
 
-    if (errors.length > 0) return res.status(422).send({ message: errors });
+    if (errors.length > 0) return res.status(422).send({ message: "Erro com a id", error: errors });
 
     try {
         await repository.findSkuById(req.params.id, (error, result) => {
-            if (result) return res.status(200).send({ message: "Produto encontrado", result });
-            if (error) return res.status(500).send({ message: "Produto não encontrado", erro: error.message });
-            return res.status(404).send({ message: "Produto não encontrado", error });
+            if (result) return res.status(200).send({ message: "Sku encontrada", result });
+            if (error) return res.status(500).send({ message: "Falha ao encontrar a sku", erro: error.message });
+            return res.status(404).send({ message: "Sku não encontrada", error });
         });
     } catch (e) {
-        res.status(500).send({ message: 'Falha ao encontrar o produto', e });
+        res.status(500).send({ message: 'Falha ao encontrar a sku', e });
     }
 }
 
@@ -50,16 +50,16 @@ exports.findProductById = async (req, res) => {
 
     const { errors } = validationResult(req);
 
-    if (errors.length > 0) return res.status(422).send({ message: errors });
+    if (errors.length > 0) return res.status(422).send({ message: "Erro com a id", error: errors });
 
     try{
         await repository.findProductById(req.params.id, (error, result) => {
-            if (result) return res.status(200).send({ message: "Produto encontrado", result });
-            if (error) return res.status(500).send({ message: "Produto não encontrado", erro: error.message });
-            return res.status(404).send({ message: "Produto não encontrado", error });
+            if (result) return res.status(200).send({ message: "Sku encontrada", result });
+            if (error) return res.status(500).send({ message: "Falha ao encontrar a sku", erro: error.message });
+            return res.status(404).send({ message: "Sku não encontrada", error });
         })
     }catch (e) {
-        res.status(500).send({ message: 'Falha ao encontrar o produto', e });
+        res.status(500).send({ message: 'Falha ao encontrar a sku', e });
     }
 }
 
@@ -67,7 +67,7 @@ exports.updateSku = async (req, res) => {
 
     const { errors } = validationResult(req);
 
-    if (errors.length > 0) return res.status(422).send({ message: errors });
+    if (errors.length > 0) return res.status(422).send({ message: "Erro com os dados da sku", error: errors });
 
     try {
         await repository.updateSku(req.params.id, req.body, (error, result) => {
@@ -84,11 +84,11 @@ exports.deleteSku = async (req, res) => {
 
     const { errors } = validationResult(req);
 
-    if (errors.length > 0) return res.status(422).send({ message: errors });
+    if (errors.length > 0) return res.status(422).send({ message: "Erro com a id", error: errors });
 
     try {
         await repository.deleteSku(req.params.id, (error, result) => {
-            if (result) return res.status(200).send({ message: "Sku apagada", result });
+            if (result) return res.status(204).send({ message: "Sku apagada", result });
             if (error) return res.status(500).send({ message: "Não foi possível apagar a Sku", erro: error.message });
             return res.status(404).send({ message: "Sku não encontrada", error });
         })
@@ -100,11 +100,11 @@ exports.deleteSku = async (req, res) => {
 exports.listPaginated = async (req, res) => {
 
     await repository.listPaginated(req.params.page, (error, result) => {
-        if (result.docs.length === 0) return res.status(206).send({ message: "Nenhum Produto encontrado", result });
+        if (result.docs.length === 0) return res.status(206).send({ message: "Nenhuma sku encontrada", result });
         if (error) return res.status(500).send({ erro: error.message });
         return res.status(200).send({
             message: "Produto(s) encontrado(s)", result}).catch(err => {
-                throw new Error(err);
+                throw new Error({ message: 'Falha ao listar as skus',err });
             });
     });
 }
