@@ -1,27 +1,22 @@
-swagger: "2.0"
-
+swagger: '2.0'
 schemes:
   - http
-  
-host: localhost:3000
-
+host: 'localhost:3000'
+basePath: /
 info:
-  version: "1.0"
+  version: '1.0'
   title: products-API_with_node_js
   description: Administa o catalógo e estoque de produtos de um e-commerce
   contact:
     name: Suporte
     email: vitor.zogbi_bols@compasso.com.br
-
 consumes:
   - application/json
 produces:
-  - application/json    
-
+  - application/json
 tags:
   - name: skuproduct
   - name: sku
-  
 paths:
   '/skuproducts/create':
     post:
@@ -37,34 +32,34 @@ paths:
           schema:
             $ref: '#/definitions/skuproducts'
       responses:
-        201:
+        '201':
           description: Produto cadastrado com sucesso
           schema:
             $ref: '#/definitions/skuproducts'
-        422: 
+        '422':
           description: Erro com os dados do produto
-        500:
+        '500':
           description: Não foi possível cadastrar o produto
-        
   '/skuproducts/list':
     get:
       tags:
         - skuproduct
       summary: Listagem de produtos
-      description: Retorna uma listagem com todos os produtos e suas skus cadastrados na base de dados
+      description: >-
+        Retorna uma listagem com todos os produtos e suas skus cadastrados na
+        base de dados
       operationId: listProducts
       responses:
-        200:
+        '200':
           description: OK
           schema:
             $ref: '#/definitions/skuproducts'
-        500:
+        '500':
           description: Não foi possível consultar os produtos
-  
   '/skuproducts/listpaginated/{page}':
     get:
       tags:
-        - skuproducts
+        - skuproduct
       summary: Listagem de produtos paginada
       description: Retorna listagem dos produtos com paginação
       parameters:
@@ -76,19 +71,18 @@ paths:
           name: skuproduct
           type: string
       responses:
-        200:
+        '200':
           description: OK
           schema:
-            $ref: '#/definitions/skuproducts' 
-        206:
+            $ref: '#/definitions/skuproducts'
+        '206':
           description: Zero produto nessa página
-        500: 
+        '500':
           description: Falha ao listar os produtos
-            
   '/skuproducts/findbyid/{id}':
     get:
       tags:
-      - skuproduct
+        - skuproduct
       summary: Encontra produto pela id
       description: Retorna os dados de um produto com base na id informada
       operationId: findProductById
@@ -97,26 +91,25 @@ paths:
           name: id
           type: string
           required: true
-        - in: query  
+        - in: query
           name: skuproduct
           type: string
       responses:
-        200:
+        '200':
           description: Produto encontrado
           schema:
             $ref: '#/definitions/skuproducts'
-        404:
+        '404':
           description: Produto não encontrado
-        422: 
-          description: Erro com os dados do produto 
-        500:
+        '422':
+          description: Erro com os dados do produto
+        '500':
           description: Falha ao encontrar o produto
-    
   '/skuproducts/update/{id}':
     put:
       tags:
-      - skuproduct
-      summary: Altera produto  
+        - skuproduct
+      summary: Altera produto
       description: Altera algum(ns) valor(s) do produto
       operationId: updateProduct
       parameters:
@@ -129,23 +122,22 @@ paths:
           required: true
           schema:
             $ref: '#/definitions/skuproducts'
-        - in: query  
+        - in: query
           name: skuproduct
           type: string
       responses:
-        201: 
+        '201':
           description: Produto atualizado
           schema:
             $ref: '#/definitions/skuproducts'
-        422: 
+        '422':
           description: Erro com os dados do produto
-        500:
+        '500':
           description: Não foi possível alterar o produto
-  
   '/skuproducts/delete/{id}':
     delete:
       tags:
-      - skuproduct
+        - skuproduct
       summary: Exclui o produto
       description: Exclusão de um produto através do Id
       operationId: deleteProduct
@@ -158,19 +150,18 @@ paths:
           name: skuproduct
           type: string
       responses:
-        204:
+        '204':
           description: Produto apagado com sucesso
-        404:
+        '404':
           description: Produto não encontrado
-        422: 
+        '422':
           description: Erro com os dados do produto
-        500: 
+        '500':
           description: Não foi possível apagar o produto desejado
-    
   '/sku/create':
     post:
       tags:
-      - sku
+        - sku
       summary: Cria uma sku
       description: Cria uma sku referente a um produto
       operationId: createSku
@@ -181,35 +172,32 @@ paths:
           schema:
             $ref: '#/definitions/skus'
       responses:
-        201:
+        '201':
           description: ok
-        404:
+        '404':
           description: SKU não criada
-        422: 
+        '422':
           description: Erro com os dados da sku
-        500: 
+        '500':
           description: Não foi possível apagar o produto
-    
   '/sku/list':
     get:
       tags:
-      - sku
-      summary: Lista skus 
+        - sku
+      summary: Lista skus
       description: Lista todas as skus cadastradas no sistema
       operationId: listSku
       responses:
-        200:
+        '200':
           description: OK
           schema:
             $ref: '#/definitions/skus'
-        500:
+        '500':
           description: Falha ao carregar as skus
-          
-    
   '/sku/listpaginated/{page}':
     get:
       tags:
-        - skus
+        - sku
       summary: Listagem de skus paginada
       description: Retorna listagem das skus com paginação
       operationId: listPaginated
@@ -222,19 +210,18 @@ paths:
           name: sku
           type: string
       responses:
-        200:
+        '200':
           description: OK
           schema:
-            $ref: '#/definitions/skus' 
-        206:
+            $ref: '#/definitions/skus'
+        '206':
           description: Nenhuma sku encontrada
-        500: 
+        '500':
           description: Falha ao listar os produtos
-  
   '/sku/findbyid/{id}':
     get:
       tags:
-      - skus
+        - sku
       summary: Encontra sku pela id
       description: Retorna os dados de uma sku com base na id informada
       operationId: findSkuById
@@ -243,25 +230,24 @@ paths:
           name: id
           type: string
           required: true
-        - in: query  
+        - in: query
           name: sku
           type: string
       responses:
-        200:
+        '200':
           description: Sku encontrada
           schema:
             $ref: '#/definitions/skus'
-        404:
+        '404':
           description: Sku não encontrada
-        422: 
-          description: Erro com a id 
-        500:
-          description: Falha ao encontrar a sku      
-    
+        '422':
+          description: Erro com a id
+        '500':
+          description: Falha ao encontrar a sku
   '/sku/findbyproductid/{id}':
     get:
       tags:
-      - skus
+        - sku
       summary: Encontra skus pela id de produto
       description: Retorna todas as skus de um produto baseada na id do produto
       operationId: findSkuByProductId
@@ -270,25 +256,24 @@ paths:
           name: id
           type: string
           required: true
-        - in: query  
+        - in: query
           name: sku
           type: string
       responses:
-        200:
+        '200':
           description: Sku encontrada
           schema:
             $ref: '#/definitions/skus'
-        404:
+        '404':
           description: Sku não encontrada
-        422: 
+        '422':
           description: Erro com a id
-        500:
+        '500':
           description: Falha ao encontrar a sku
-    
   '/sku/update/{id}':
     put:
       tags:
-      - skus
+        - sku
       summary: Altera uma sku
       description: Altera uma sku com base na id
       operationId: updateSku
@@ -297,30 +282,26 @@ paths:
           name: id
           type: string
           required: true
-        - in: query  
-          name: sku
-          type: string
         - in: body
           name: sku
           required: true
           schema:
             $ref: '#/definitions/skus'
       responses:
-        201:
+        '201':
           description: Sku editada com sucesso
           schema:
             $ref: '#/definitions/skus'
-        404:
+        '404':
           description: Sku não encontrada
-        422: 
+        '422':
           description: Erro com os dados da sku
-        500:
+        '500':
           description: Falha ao encontrar a sku
-    
   '/sku/delete/{id}':
     delete:
       tags:
-      - skus
+        - sku
       summary: Exclui a sku
       description: Exclusão de uma sku através da Id
       operationId: deleteSku
@@ -333,53 +314,51 @@ paths:
           name: sku
           type: string
       responses:
-        204:
+        '204':
           description: Sku apagada com sucesso
-        404:
+        '404':
           description: Sku não encontrada
-        422: 
+        '422':
           description: Erro com os dados da sku
-        500: 
-          description: Não foi possível apagar a sku desejada      
-
+        '500':
+          description: Não foi possível apagar a sku desejada
 definitions:
   skuproducts:
     type: object
     properties:
       _id:
-        type: object 
-        example: "5d826e5d57eab10780aecd1d"
+        type: string
+        example: 5d826e5d57eab10780aecd1d
       active:
         type: boolean
       name:
         type: string
         format: utf-8
-        example: "Camisa"
+        example: Camisa
       description:
         type: string
         format: utf-8
-        example: "Item para vestir o torso"
-  
+        example: Item para vestir o torso
   skus:
     type: object
     properties:
       _id:
-        type: object 
-        example: "5d826e5d57eab10780aecd1e"
-      productId: 
+        type: string
+        example: 5d826e5d57eab10780aecd1e
+      productId:
         $ref: '#/definitions/skuproducts'
       color:
         type: string
         format: utf-8
-        example: "verde"
+        example: verde
       size:
-       type: string
-       format: utf-8
-       example: "GG"
+        type: string
+        format: utf-8
+        example: GG
       price:
         type: number
         format: double
-        example: 49.90
+        example: 49.9
       stockLevel:
         type: number
         format: integer
