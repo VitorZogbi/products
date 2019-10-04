@@ -39,7 +39,7 @@ exports.listProductWithSku = async (req, res) => {
     }
 }
 
-exports.findbyId = async (req, res) => {
+exports.findById = async (req, res) => {
 
     const {errors} = validationResult(req);
 
@@ -66,7 +66,7 @@ exports.update = async (req, res) => {
 
 }
 
-exports.updateSku = async (req, res) => {
+exports.updateSkuInProducts = async (req, res) => {
 
     const { errors } = validationResult(req);
 
@@ -93,7 +93,7 @@ exports.delete = async (req, res) => {
     }).catch(error => { res.status(500).send({ message: 'Falha ao encontrar o produto', error }) })
 }
 
-exports.deleteSku = async (req, res) => {
+exports.deleteSkuInProduct = async (req, res) => {
 
     const { errors } = validationResult(req);
 

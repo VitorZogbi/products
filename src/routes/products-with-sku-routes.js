@@ -10,14 +10,14 @@ router.post('/createsku/:id', IdValidation.validateId(), ProductWithSkuValidatio
 
 router.put('/update/:id', IdValidation.validateId(), ProductWithSkuValidation.productValidation(), productsWithSkuController.update);
 
-router.put('/updatesku/:id', IdValidation.validateId(), ProductWithSkuValidation.skuValidation(), productsWithSkuController.updateSku);
+router.put('/updatesku/:id', IdValidation.validateId(), ProductWithSkuValidation.skuValidation(), productsWithSkuController.updateSkuInProducts);
 
 router.get('/list', productsWithSkuController.listProductWithSku);
 
-router.get('/findbyid/:id', IdValidation.validateId(), productsWithSkuController.findbyId);
+router.get('/findbyid/:id', IdValidation.validateId(), productsWithSkuController.findById);
 
 router.delete('/delete/:id', IdValidation.validateId(), productsWithSkuController.delete);
 
-router.delete('/deletesku/:id', IdValidation.validateId(), productsWithSkuController.deleteSku);
+router.delete('/deletesku/:id', IdValidation.validateId(), productsWithSkuController.deleteSkuInProduct);
 
 module.exports = router;
