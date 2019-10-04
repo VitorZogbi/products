@@ -22,4 +22,7 @@ app.use('/skuproducts', skuProductsRoutes);
 const skuRoutes = require('./routes/sku-routes');
 app.use('/sku', skuRoutes);
 
+const productsWithSkuRoutes = require('./routes/products-with-sku-routes');
+app.use('/productswithsku', productsWithSkuRoutes);
+
 module.exports = app;

@@ -15,6 +15,7 @@ const db = mongoose.connection;
 require('./models/products-models');
 require('./models/sku-products-models');
 require('./models/sku-models');
+require('./models/products-with-sku-models');
 
 //db status
 db.on('connected', () => {

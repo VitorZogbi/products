@@ -103,8 +103,8 @@ exports.listPaginated = async (req, res) => {
         if (result.docs.length === 0) return res.status(206).send({ message: "Nenhuma sku encontrada", result });
         if (error) return res.status(500).send({ erro: error.message });
         return res.status(200).send({
-            message: "Produto(s) encontrado(s)", result}).catch(err => {
-                throw new Error({ message: 'Falha ao listar as skus',err });
-            });
+            message: "Produto(s) encontrado(s)", result});
+    }).catch(err => {
+        res.status(500).send({ message: 'Falha ao listar as skus', err });
     });
 }
