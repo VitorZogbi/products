@@ -39,6 +39,19 @@ exports.listProductWithSku = async (req, res) => {
     }
 }
 
+exports.listProductsWithSkuPaginated = async (req, res) => {
+    
+    await repository.listProductsWithSkuPaginated(req.params.page, (error, result) => {
+        if (result.docs.length === 0) return res.status(206).send({ message: "Nenhum Produto encontrado", result });
+        if (error) return res.status(500).send({ messsage: 'Falha ao carregar os produtos', erro: error.message });
+        return res.status(200).send({
+            message: "Produto(s) encontrado(s)", result
+        })
+    }).catch(err => {
+        throw new Error(err);
+    });;
+};
+
 exports.findById = async (req, res) => {
 
     const {errors} = validationResult(req);

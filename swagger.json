@@ -586,6 +586,38 @@
         }
       }
     },
+    "/productswithsku/list/{page}": {
+      "get": {
+        "tags": [
+          "productswithsku"
+        ],
+        "summary": "Lista os produtos com paginação",
+        "description": "Lista os produtos com suas skus em formato paginado",
+        "operationId": "listProductsWithSkuPaginated",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "page",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Produto(s) encontrado(s)",
+            "schema": {
+              "$ref": "#/definitions/productwithsku"
+            }
+          },
+          "206": {
+            "description": "Nenhum produto encontrado"
+          },
+          "500": {
+            "description": "Falha ao carregar os produtos"
+          }
+        }
+      }
+    },
     "/productswithsku/findbyid/{id}": {
       "get": {
         "tags": [

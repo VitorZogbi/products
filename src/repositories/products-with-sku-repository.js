@@ -25,6 +25,21 @@ exports.listProductWithSku = async () => {
 
 }
 
+exports.listProductsWithSkuPaginated = async (page, callback) => {
+
+    const options = {
+
+        limit: 10,
+        page: page
+
+    }
+
+    await ProductsWithSku.paginate({}, options, (error, docs) => {
+        if (error) return callback(error, null);
+        return callback(null, docs);
+    })
+}
+
 exports.findbyId = async (id, callback) => {
 
     await ProductsWithSku.findById(id, '-__v', (error, docs) => {

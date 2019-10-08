@@ -14,6 +14,8 @@ router.put('/updatesku/:id', IdValidation.validateId(), ProductWithSkuValidation
 
 router.get('/list', productsWithSkuController.listProductWithSku);
 
+router.get('/list/:page', productsWithSkuController.listProductsWithSkuPaginated);
+
 router.get('/findbyid/:id', IdValidation.validateId(), productsWithSkuController.findById);
 
 router.delete('/delete/:id', IdValidation.validateId(), productsWithSkuController.delete);
