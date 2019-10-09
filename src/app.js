@@ -20,7 +20,7 @@ const skuProductsRoutes = require('./routes/sku-products-routes');
 app.use('/skuproducts', skuProductsRoutes);
 
 const skuRoutes = require('./routes/sku-routes');
-app.use('/sku', skuRoutes);
+app.use('/skus', skuRoutes);
 
 const productsWithSkuRoutes = require('./routes/products-with-sku-routes');
 app.use('/productswithsku', productsWithSkuRoutes);

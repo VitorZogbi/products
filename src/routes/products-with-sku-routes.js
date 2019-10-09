@@ -12,9 +12,9 @@ router.put('/update/:id', IdValidation.validateId(), ProductWithSkuValidation.pr
 
 router.put('/updatesku/:id', IdValidation.validateId(), ProductWithSkuValidation.skuValidation(), productsWithSkuController.updateSkuInProducts);
 
-router.get('/list', productsWithSkuController.listProductWithSku);
+router.get('/', productsWithSkuController.listProductWithSku);
 
-router.get('/list/:page', productsWithSkuController.listProductsWithSkuPaginated);
+router.get('/:page', productsWithSkuController.listProductsWithSkuPaginated);
 
 router.get('/findbyid/:id', IdValidation.validateId(), productsWithSkuController.findById);
 

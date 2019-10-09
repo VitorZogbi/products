@@ -25,7 +25,7 @@ exports.listProducts = async () => {
 };
 
 
-exports.findProductById = async (id, callback) => {
+exports.findByProductId = async (id, callback) => {
 
     await SKUProduct.findById(id, '-__v',(error, docs) => {
         if(error) return callback(error, null);

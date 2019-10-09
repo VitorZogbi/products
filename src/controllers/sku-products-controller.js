@@ -43,14 +43,14 @@ exports.listPaginated = async (req, res) => {
     
 }
 
-exports.findProductById = async (req, res) => {
+exports.findByProductId = async (req, res) => {
 
     const { errors } = validationResult(req);
 
     if (errors.length > 0) return res.status(422).send({ message: "erro com os dados do produto", error: errors });
     
         try {
-            await repository.findProductById(req.params.id, (error, result) => {
+            await repository.findByProductId(req.params.id, (error, result) => {
                 if (result) return res.status(200).send({ message: "Produto encontrado", result });
                 if (error) return res.status(500).send({ message: "Produto não encontrado", erro: error.message });
                 return res.status(404).send({ message: "Produto não encontrado", error });

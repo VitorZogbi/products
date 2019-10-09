@@ -27,15 +27,6 @@ exports.findSkuById = async (id, callback) => {
    
 };
 
-exports.findProductById = async (id, callback) => {
-
-    await SKU.find({ productId: id }, (error, docs) => {
-        
-        if (error) return callback(error, null);
-        return callback(null, docs);
-    })
-};
-
 exports.updateSku = async (id, data, callback) => {
 
     await SKU.findByIdAndUpdate(id, { $set: data }, (error, docs) => {

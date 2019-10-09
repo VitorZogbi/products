@@ -46,23 +46,6 @@ exports.findSkuById = async (req, res) => {
     }
 }
 
-exports.findProductById = async (req, res) => {
-
-    const { errors } = validationResult(req);
-
-    if (errors.length > 0) return res.status(422).send({ message: "Erro com a id", error: errors });
-
-    try{
-        await repository.findProductById(req.params.id, (error, result) => {
-            if (result) return res.status(200).send({ message: "Sku encontrada", result });
-            if (error) return res.status(500).send({ message: "Falha ao encontrar a sku", erro: error.message });
-            return res.status(404).send({ message: "Sku não encontrada", error });
-        })
-    }catch (e) {
-        res.status(500).send({ message: 'Falha ao encontrar a sku', e });
-    }
-}
-
 exports.updateSku = async (req, res) => {
 
     const { errors } = validationResult(req);
