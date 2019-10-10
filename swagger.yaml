@@ -264,6 +264,9 @@ paths:
           required: true
           schema:
             $ref: '#/definitions/skus'
+        - in: query
+          name: sku
+          type: string
       responses:
         '201':
           description: Sku editada com sucesso
@@ -275,6 +278,7 @@ paths:
           description: Erro com os dados da sku
         '500':
           description: Falha ao encontrar a sku
+          
   '/skus/delete/{id}':
     delete:
       tags:
