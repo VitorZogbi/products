@@ -158,7 +158,7 @@ paths:
           description: Erro com os dados do produto
         '500':
           description: Não foi possível apagar o produto desejado
-  '/sku/create':
+  '/skus/create':
     post:
       tags:
         - sku
@@ -174,13 +174,16 @@ paths:
       responses:
         '201':
           description: ok
+          schema:
+            $ref: '#/definitions/skus'
         '404':
           description: SKU não criada
         '422':
           description: Erro com os dados da sku
         '500':
           description: Não foi possível criar a sku
-  '/sku/list':
+
+  '/skus/list':
     get:
       tags:
         - sku
@@ -194,7 +197,7 @@ paths:
             $ref: '#/definitions/skus'
         '500':
           description: Falha ao carregar as skus
-  '/sku/listpaginated/{page}':
+  '/skus/listpaginated/{page}':
     get:
       tags:
         - sku
@@ -218,7 +221,7 @@ paths:
           description: Nenhuma sku encontrada
         '500':
           description: Falha ao listar os produtos
-  '/sku/findbyid/{id}':
+  '/skus/findbyid/{id}':
     get:
       tags:
         - sku
@@ -244,33 +247,7 @@ paths:
           description: Erro com a id
         '500':
           description: Falha ao encontrar a sku
-  '/sku/findbyproductid/{id}':
-    get:
-      tags:
-        - sku
-      summary: Encontra skus pela id de produto
-      description: Retorna todas as skus de um produto baseada na id do produto
-      operationId: findSkuByProductId
-      parameters:
-        - in: path
-          name: id
-          type: string
-          required: true
-        - in: query
-          name: sku
-          type: string
-      responses:
-        '200':
-          description: Sku encontrada
-          schema:
-            $ref: '#/definitions/skus'
-        '404':
-          description: Sku não encontrada
-        '422':
-          description: Erro com a id
-        '500':
-          description: Falha ao encontrar a sku
-  '/sku/update/{id}':
+  '/skus/update/{id}':
     put:
       tags:
         - sku
@@ -298,7 +275,7 @@ paths:
           description: Erro com os dados da sku
         '500':
           description: Falha ao encontrar a sku
-  '/sku/delete/{id}':
+  '/skus/delete/{id}':
     delete:
       tags:
         - sku
