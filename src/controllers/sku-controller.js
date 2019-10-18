@@ -8,14 +8,15 @@ exports.createSku = async (req, res) => {
     if (errors.length > 0) return res.status(422).send({ message: "Erro com os dados da sku", error: errors });
 
     try {
+        console.log('controller');
 
-        await repository.createSku(req.body, (error, result) => {
+        await repository.createSku( req.get('productId'), req.body, (error, result) => {
             if (result) return res.status(201).send(result);
             res.status(404).send({ erro: "SKU não criada", error });
         })
         
-    }catch (e) {
-        return res.status(422).send({ message: "Não foi possível cadastrar o produto", error: error.message });
+    }catch (error) {
+        return res.status(500).send({ message: "Não foi possível cadastrar o produto", error: error.message });
     }
 };
 

@@ -19,6 +19,14 @@ const skuProduct = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+
+    skus : [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            
+            ref: 'SKU'
+        }   
+    ]
    
 });
 

@@ -14,8 +14,8 @@ exports.listProducts = async () => {
         {
             $lookup: {
                 from: "skus",
-                localField: "_id",
-                foreignField: "productId",
+                localField: "skus",
+                foreignField: "_id",
                 as: "skus"
             }
         }])
@@ -32,6 +32,15 @@ exports.findByProductId = async (id, callback) => {
         return callback(null, docs);
     });
     
+}
+
+exports.addSku = async (productId, skuId) => {
+
+    await SKUProduct.findByIdAndUpdate(productId, { $addToSet: { skus: skuId } });
+}       
+
+exports.removeSku = async (id) => {
+    await SKUProduct.updateOne({ "skus": mongoose.Types.ObjectId(id) }, { $pull: { skus: mongoose.Types.ObjectId(id) }})
 }
 
 exports.updateProduct = async (id, data, callback) => {

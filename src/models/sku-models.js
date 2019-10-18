@@ -3,13 +3,7 @@ const mongoosePaginate = require('mongoose-paginate-v2');
 const mongooseAggregatePaginate = require('mongoose-aggregate-paginate-v2')
 
 const sku = new mongoose.Schema({
-     
-    productId: {
-                type: mongoose.Schema.Types.ObjectId,
-                required: true,
-                ref: 'SKUProduct'
-    },
-
+    
     color: {
             type: String,
             list: true,

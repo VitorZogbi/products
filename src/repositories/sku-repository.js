@@ -1,11 +1,15 @@
 const mongoose = require('mongoose');
 const SKU = mongoose.model('SKU');
+const products = require('./sku-products-repository');
 
-exports.createSku = async (data, callback) => {
+exports.createSku = async ( productId, data, callback) => {
         
     const sku = new SKU(data);
+    
     await sku.save((error, docs) => {
         if (error) return callback(error, null);
+        console.log(docs._id);
+        products.addSku( productId, docs.id );
         return callback (null, docs);
     });
 };
@@ -41,6 +45,7 @@ exports.deleteSku = async (id, callback) => {
     await SKU.findByIdAndDelete( id, (error, docs) => {
         
         if (error) return callback(error, null);
+        products.removeSku (id);
         return callback(null, docs);
     })
 };
