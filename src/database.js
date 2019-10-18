@@ -13,7 +13,7 @@ const db = mongoose.connection;
 
 // Load models
 
-require('./models/sku-products-models');
+require('./models/products-models');
 require('./models/sku-models');
 
 //db status
